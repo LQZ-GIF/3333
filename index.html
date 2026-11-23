@@ -219,6 +219,9 @@
             <button class="sprint-mode" data-sprint-mode="fast">
               <span>极速模式</span><small>七词一组，快速过词</small>
             </button>
+            <button class="sprint-mode" data-sprint-mode="morph">
+              <span>构词模式</span><small>按词根词缀过词</small>
+            </button>
           </div>
 
           <div class="sprint-head">
@@ -260,6 +263,28 @@
               <button class="btn btn-primary" data-action="fast-next">
                 下一组<svg class="icon"><use href="#i-arrow"></use></svg>
               </button>
+            </div>
+          </section>
+
+          <section class="sprint-morph" id="sprint-morph-pane" hidden>
+            <div class="morph-fast-toolbar">
+              <div class="morph-fast-select-wrap">
+                <span>选择构词家族</span>
+                <select id="morph-fast-select" aria-label="选择前缀、后缀或词根"></select>
+              </div>
+              <div class="fast-position">
+                第 <b id="morph-fast-group">1</b> 组
+                <span id="morph-fast-range">1–7</span> / <span id="morph-fast-total">0</span>
+              </div>
+            </div>
+            <div class="morph-fast-head" id="morph-fast-head"></div>
+            <div class="fast-list" id="morph-fast-list"></div>
+            <div class="fast-foot">
+              <p>同一构词家族，7 词一组。先看英文回忆，再点“点击显示”核对中文；点词会朗读，位置自动保存。</p>
+              <div class="morph-fast-nav">
+                <button class="btn btn-ghost btn-small" data-action="morph-prev">上一组</button>
+                <button class="btn btn-primary btn-small" data-action="morph-next">下一组<svg class="icon"><use href="#i-arrow"></use></svg></button>
+              </div>
             </div>
           </section>
 
