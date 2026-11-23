@@ -284,6 +284,7 @@
         dailyMemory: state.dailyMemory,
         sprintMode: state.sprintMode,
         sprintFast: state.sprintFast,
+        sprintMorph: state.sprintMorph,
         sprintLog: state.sprintLog
       }));
     } catch (e) { /* 隐私模式下静默失败，应用仍可正常使用 */ }
@@ -330,6 +331,28 @@
       checkedIn: false,
       summary: false
     };
+  }
+  function defaultSprintMorphKey() {
+    if (ACTIVE_MORPH_BY_KEY.has('prefix:pre')) return 'prefix:pre';
+    return ACTIVE_MORPH.length ? ACTIVE_MORPH[0].key : '';
+  }
+  function newSprintMorph() {
+    return { key: defaultSprintMorphKey(), index: 0, revealed: {} };
+  }
+  function normalizeSprintMorph(raw) {
+    if (!raw || typeof raw !== 'object') return newSprintMorph();
+    const key = ACTIVE_MORPH_BY_KEY.has(raw.key) ? raw.key : defaultSprintMorphKey();
+    const group = ACTIVE_MORPH_BY_KEY.get(key);
+    const total = group ? group.words.length : 0;
+    const index = Math.max(0, Math.min(Math.max(0, total - 1), Math.floor((Number(raw.index) || 0) / 7) * 7));
+    const revealed = {};
+    if (raw.revealed && typeof raw.revealed === 'object') {
+      Object.keys(raw.revealed).forEach(function (id) {
+        const w = BY_ID.get(id);
+        if (w && raw.revealed[id] && group && group.words.indexOf(w) !== -1) revealed[id] = true;
+      });
+    }
+    return { key: key, index: index, revealed: revealed };
   }
   function normalizeSprintFast(raw, log) {
     if (!raw || raw.date !== todayKey()) return newSprintFast();
@@ -392,9 +415,10 @@
     dailyRevealed: null,
     sprintRevealed: new Set(),
     sprintRendered: false,
-    sprintMode: saved.sprintMode === 'fast' ? 'fast' : 'board',
+    sprintMode: saved.sprintMode === 'fast' || saved.sprintMode === 'morph' ? saved.sprintMode : 'board',
     sprintLog: saved.sprintLog && typeof saved.sprintLog === 'object' ? saved.sprintLog : {},
-    sprintFast: normalizeSprintFast(saved.sprintFast, saved.sprintLog)
+    sprintFast: normalizeSprintFast(saved.sprintFast, saved.sprintLog),
+    sprintMorph: normalizeSprintMorph(saved.sprintMorph)
   };
 
   /* ---------------------------------------------------------- search index */
@@ -1638,28 +1662,151 @@
       else note.textContent = '再刷 ' + (30 - count) + ' 个单词即可打卡';
     }
   }
+  const MORPH_TYPE_CN = { prefix: '前缀', suffix: '后缀', root: '词根' };
+  const MORPH_TYPE_EN = { prefix: 'PREFIX', suffix: 'SUFFIX', root: 'ROOT' };
+
+  function sprintMorphGroup() {
+    let group = ACTIVE_MORPH_BY_KEY.get(state.sprintMorph.key);
+    if (!group) {
+      state.sprintMorph.key = defaultSprintMorphKey();
+      state.sprintMorph.index = 0;
+      state.sprintMorph.revealed = {};
+      group = ACTIVE_MORPH_BY_KEY.get(state.sprintMorph.key);
+    }
+    return group || null;
+  }
+  function sprintMorphWords() {
+    const group = sprintMorphGroup();
+    if (!group) return [];
+    return group.words.slice().sort(function (a, b) {
+      return (b.freq || 0) - (a.freq || 0) || a.word.localeCompare(b.word);
+    });
+  }
+  function fillSprintMorphSelect(selectedKey) {
+    const select = $('#morph-fast-select');
+    if (!select) return;
+    if (!select.dataset.ready) {
+      const types = [
+        ['prefix', '前缀', PREFIX_GROUPS],
+        ['suffix', '后缀', SUFFIX_GROUPS],
+        ['root', '词根', ROOT_GROUPS]
+      ];
+      select.innerHTML = types.map(function (item) {
+        return '<optgroup label="' + item[1] + '">' + item[2].map(function (g) {
+          return '<option value="' + g.key + '">' + escapeHtml(g.label) + ' · ' + g.words.length + ' 词</option>';
+        }).join('') + '</optgroup>';
+      }).join('');
+      select.dataset.ready = '1';
+    }
+    select.value = selectedKey;
+  }
+  function morphFastRow(w, i) {
+    const shown = Boolean(state.sprintMorph.revealed[w.id]);
+    return '<button class="fast-row' + (shown ? ' is-revealed' : '') + '" data-morph-fast-id="' + w.id + '" aria-expanded="' + (shown ? 'true' : 'false') + '">' +
+      '<span class="fast-index">' + (i + 1) + '</span>' +
+      '<span class="fast-main"><span class="fast-word">' + escapeHtml(w.word) + '</span>' +
+        (w.phonetic ? '<span class="fast-phonetic">' + escapeHtml(w.phonetic) + '</span>' : '') +
+      '</span>' +
+      '<span class="fast-reveal">' + (shown ? escapeHtml(meaningWithPos(w)) : '点击显示') + '</span>' +
+      '<span class="fast-arrow"><svg class="icon"><use href="#i-chevron"></use></svg></span>' +
+    '</button>';
+  }
+  function renderMorphFast() {
+    const group = sprintMorphGroup();
+    const list = $('#morph-fast-list');
+    const head = $('#morph-fast-head');
+    if (!group || !list || !head) return;
+    fillSprintMorphSelect(group.key);
+    const all = sprintMorphWords();
+    const total = all.length;
+    const maxIndex = Math.max(0, Math.floor((total - 1) / FAST_SIZE) * FAST_SIZE);
+    state.sprintMorph.index = Math.max(0, Math.min(maxIndex, state.sprintMorph.index));
+    const words = all.slice(state.sprintMorph.index, state.sprintMorph.index + FAST_SIZE);
+    head.innerHTML =
+      '<div class="morph-fast-type">' + MORPH_TYPE_EN[group.type] + ' · ' + MORPH_TYPE_CN[group.type] + '</div>' +
+      '<div class="morph-fast-title-row"><h3>' + escapeHtml(group.label) + '</h3><span class="morph-fast-count">' + total + ' 个词</span></div>' +
+      '<p class="morph-fast-meaning">' + escapeHtml(group.meaning || '按词形匹配') + '</p>' +
+      (group.note ? '<p class="morph-fast-note">' + escapeHtml(group.note) + '</p>' : '');
+    list.innerHTML = words.map(morphFastRow).join('');
+    if ($('#morph-fast-group')) $('#morph-fast-group').textContent = Math.floor(state.sprintMorph.index / FAST_SIZE) + 1;
+    if ($('#morph-fast-range')) $('#morph-fast-range').textContent = (state.sprintMorph.index + 1) + '–' + Math.min(total, state.sprintMorph.index + words.length);
+    if ($('#morph-fast-total')) $('#morph-fast-total').textContent = total;
+  }
+  function toggleMorphFastWord(id, row) {
+    const w = BY_ID.get(id);
+    if (!w || !row) return;
+    const shown = !state.sprintMorph.revealed[id];
+    if (shown) state.sprintMorph.revealed[id] = true; else delete state.sprintMorph.revealed[id];
+    speak(w.word);
+    row.classList.toggle('is-revealed', shown);
+    row.setAttribute('aria-expanded', shown ? 'true' : 'false');
+    const reveal = row.querySelector('.fast-reveal');
+    if (reveal) reveal.textContent = shown ? meaningWithPos(w) : '点击显示';
+    saveStore();
+  }
+  function morphFastAdvance(delta) {
+    const total = sprintMorphWords().length;
+    if (!total) return;
+    let index = state.sprintMorph.index + delta * FAST_SIZE;
+    if (index >= total) index = 0;
+    else if (index < 0) index = Math.floor((total - 1) / FAST_SIZE) * FAST_SIZE;
+    state.sprintMorph.index = index;
+  }
+  function morphFastNext() {
+    morphFastAdvance(1);
+    saveStore();
+    renderMorphFast();
+    const pane = $('#sprint-morph-pane');
+    if (pane) window.scrollTo({ top: Math.max(0, pane.getBoundingClientRect().top + window.scrollY - 84), behavior: 'smooth' });
+  }
+  function morphFastPrev() {
+    morphFastAdvance(-1);
+    saveStore();
+    renderMorphFast();
+    const pane = $('#sprint-morph-pane');
+    if (pane) window.scrollTo({ top: Math.max(0, pane.getBoundingClientRect().top + window.scrollY - 84), behavior: 'smooth' });
+  }
+  function setSprintMorphGroup(key) {
+    if (!ACTIVE_MORPH_BY_KEY.has(key)) return;
+    state.sprintMorph.key = key;
+    state.sprintMorph.index = 0;
+    state.sprintMorph.revealed = {};
+    saveStore();
+    renderMorphFast();
+  }
+
   function renderSprint() {
     const fast = state.sprintMode === 'fast';
+    const morph = state.sprintMode === 'morph';
     const summary = fast && state.sprintFast.summary;
     const modebar = document.querySelector('#view-sprint .sprint-modebar');
     const head = document.querySelector('#view-sprint .sprint-head');
     const board = $('#sprint-board-pane');
     const meter = $('#sprint-meter');
     const fastPane = $('#sprint-fast-pane');
+    const morphPane = $('#sprint-morph-pane');
     const summaryPane = $('#sprint-summary');
     $$('.sprint-mode').forEach(function (b) { b.classList.toggle('is-active', b.dataset.sprintMode === state.sprintMode); });
     const sprintView = $('#view-sprint');
-    if (sprintView) sprintView.classList.toggle('is-fast', fast && !summary);
+    if (sprintView) sprintView.classList.toggle('is-fast', (fast || morph) && !summary);
+    if (sprintView) sprintView.classList.toggle('is-morph', morph);
     if (modebar) modebar.hidden = summary;
     if (head) head.hidden = summary;
-    if (board) board.hidden = fast;
-    if (meter) meter.hidden = fast;
+    if (board) board.hidden = fast || morph;
+    if (meter) meter.hidden = fast || morph;
     if (fastPane) fastPane.hidden = !fast || summary;
+    if (morphPane) morphPane.hidden = !morph;
     if (summaryPane) summaryPane.hidden = !summary;
-    if (!fast) {
+    if (!fast && !morph) {
       if ($('#sprint-title')) $('#sprint-title').innerHTML = '一眼扫过，<br>连续点开。';
       if ($('#sprint-desc')) $('#sprint-desc').textContent = '全部 ' + TOTAL + ' 个词浓缩在一张刷词板上，不翻页。点一下看中文，再点一下收起，适合快速过词。';
       if (!state.sprintRendered) renderSprintBoard();
+      return;
+    }
+    if (morph) {
+      if ($('#sprint-title')) $('#sprint-title').innerHTML = '按词根，过一串词。';
+      if ($('#sprint-desc')) $('#sprint-desc').textContent = '选一个前缀、后缀或词根，每次过 7 个同族词；先回忆英文，再点开中文核对，点词自动朗读。';
+      renderMorphFast();
       return;
     }
     if ($('#sprint-title')) $('#sprint-title').innerHTML = '七词一组，<br>连续过词。';
@@ -1668,9 +1815,10 @@
     renderFast();
   }
   function setSprintMode(mode) {
-    if (mode !== 'board' && mode !== 'fast') return;
+    if (mode !== 'board' && mode !== 'fast' && mode !== 'morph') return;
     state.sprintMode = mode;
     if (mode === 'fast' && !state.sprintFast.summary) state.sprintFast.resumedAt = Date.now();
+    if (mode !== 'fast' && state.sprintFast.summary) state.sprintFast.summary = false;
     saveStore();
     renderSprint();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2648,6 +2796,19 @@
         if (row) openSummaryWord(row.dataset.summaryId);
       });
     }
+    const morphFastList = $('#morph-fast-list');
+    if (morphFastList) {
+      morphFastList.addEventListener('click', function (e) {
+        const row = e.target.closest('.fast-row');
+        if (row) toggleMorphFastWord(row.dataset.morphFastId, row);
+      });
+    }
+    const morphFastSelect = $('#morph-fast-select');
+    if (morphFastSelect) {
+      morphFastSelect.addEventListener('change', function () {
+        setSprintMorphGroup(morphFastSelect.value);
+      });
+    }
 
     // sidebar theme nav
     $('#theme-nav').addEventListener('click', function (e) {
@@ -2930,6 +3091,8 @@
         case 'fast-summary': fastSummary(); break;
         case 'fast-continue': fastContinue(); break;
         case 'fast-checkin': fastCheckin(); break;
+        case 'morph-prev': morphFastPrev(); break;
+        case 'morph-next': morphFastNext(); break;
         case 'open-detail': openWord(id); hideWordPop(); break;
         case 'close-drawer': closeDrawer(); break;
         case 'speak': speak(action.dataset.word || (BY_ID.get(state.currentWord) || {}).word); break;
@@ -3051,6 +3214,15 @@
         if (e.key === ' ') {
           const hiddenRow = document.querySelector('#fast-list .fast-row:not(.is-revealed)');
           if (hiddenRow) { e.preventDefault(); toggleFastWord(hiddenRow.dataset.fastId, hiddenRow); }
+          return;
+        }
+      }
+      if (!typing && state.view === 'sprint' && state.sprintMode === 'morph' && !document.body.classList.contains('drawer-open')) {
+        if (e.key === 'ArrowRight') { e.preventDefault(); morphFastNext(); return; }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); morphFastPrev(); return; }
+        if (e.key === ' ') {
+          const hiddenRow = document.querySelector('#morph-fast-list .fast-row:not(.is-revealed)');
+          if (hiddenRow) { e.preventDefault(); toggleMorphFastWord(hiddenRow.dataset.morphFastId, hiddenRow); }
           return;
         }
       }
