@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="研词 · 考研英语一词汇工坊：按前缀、后缀、同义词与形近词整理词库，并可用所选单词生成语境文章。">
+  <meta name="theme-color" content="#18302a">
+  <title>研词 YANCI · 考研英语一词汇工坊</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2318302a'/%3E%3Cpath d='M17 20h30M32 20v27M20 47h24' stroke='%23f4efe3' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='45' cy='43' r='5' fill='%23c05a45'/%3E%3C/svg%3E">
+</head>
+<body>
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4.5 4.5"></path></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16.5H6.5A2.5 2.5 0 0 0 4 22V5.5Z"></path><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path></symbol>
+    <symbol id="i-root" viewBox="0 0 24 24"><path d="M12 3v6"></path><path d="M12 9c0 4-5 5-5 9"></path><path d="M12 9c0 4 5 5 5 9"></path><path d="M7 18h.01M17 18h.01"></path></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="m14 5 5 5"></path><path d="M4 20l3.5-.8L20 6.7a2.1 2.1 0 0 0-3-3L4.5 16.2 4 20Z"></path></symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21l-6-4-6 4V4.5Z"></path></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12.5 5 5L20 6.5"></path></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9.5h3.5L13 5v14L7.5 14.5H4v-5Z"></path><path d="M16 8.5a5 5 0 0 1 0 7"></path><path d="M18.5 6a8.5 8.5 0 0 1 0 12"></path></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5"></path><path d="M4 19h16"></path></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 8V3h10v5"></path><rect x="4" y="8" width="16" height="9" rx="2"></rect><path d="M7 14h10v7H7z"></path></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5"></path><path d="M4 17v-5h5"></path><path d="M6.1 8.5A7 7 0 0 1 19 10M17.9 15.5A7 7 0 0 1 5 14"></path></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.7 5.2L19 10l-5.3 1.8L12 17l-1.7-5.2L5 10l5.3-1.8L12 3Z"></path><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"></path></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 11h18"></path><path d="M8 15h.01M12 15h.01M16 15h.01M8 18h.01M12 18h.01"></path></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"></path></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"></path><path d="M3.5 6h.01M3.5 12h.01M3.5 18h.01"></path></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"></path></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"></path></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><span>研</span></div>
+        <div class="brand-text">
+          <strong>研词</strong>
+          <span>YANCI · 英语一</span>
+        </div>
+      </div>
+
+      <nav class="main-nav" aria-label="主导航">
+        <button class="nav-item is-active" data-view="library">
+          <svg class="icon"><use href="#i-book"></use></svg><span>词库</span><em id="nav-word-count">—</em>
+        </button>
+        <button class="nav-item" data-view="sprint">
+          <svg class="icon"><use href="#i-grid"></use></svg><span>极速刷词</span><em id="nav-sprint-count">—</em>
+        </button>
+        <button class="nav-item" data-view="daily">
+          <svg class="icon"><use href="#i-calendar"></use></svg><span>每日背诵</span><em class="nav-badge" id="nav-daily-count">20</em>
+        </button>
+        <button class="nav-item" data-view="composer">
+          <svg class="icon"><use href="#i-pen"></use></svg><span>选词成文</span><em class="nav-badge" id="nav-selected-count">0</em>
+        </button>
+        <button class="nav-item" data-view="saved">
+          <svg class="icon"><use href="#i-bookmark"></use></svg><span>我的词单</span><em id="nav-saved-count">0</em>
+        </button>
+      </nav>
+
+      <div class="sidebar-block">
+        <div class="sidebar-label">词库范围</div>
+        <div class="theme-nav" id="theme-nav"></div>
+      </div>
+
+      <div class="sidebar-progress">
+        <div class="progress-top">
+          <span>掌握进度</span><strong id="mastery-pct">0%</strong>
+        </div>
+        <div class="progress-track"><span id="mastery-bar"></span></div>
+        <p><b id="mastered-count">0</b> / <span id="total-count">0</span> 个词已掌握</p>
+      </div>
+
+      <div class="sidebar-foot">
+        <span class="status-dot"></span>
+        <span>离线可用 · 自动保存</span>
+      </div>
+    </aside>
+
+    <div class="mobile-scrim" id="mobile-scrim"></div>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn mobile-menu" id="mobile-menu" aria-label="打开菜单"><svg class="icon"><use href="#i-menu"></use></svg></button>
+        <div class="topbar-heading">
+          <span class="eyebrow" id="view-eyebrow">VOCABULARY LIBRARY</span>
+          <h1 id="view-title">词库</h1>
+        </div>
+        <div class="topbar-actions">
+          <button class="search-trigger" id="search-trigger">
+            <svg class="icon"><use href="#i-search"></use></svg>
+            <span>搜索单词、词根或释义</span>
+            <kbd>/</kbd>
+          </button>
+          <div class="goal-chip" id="goal-chip" title="每日学习计划">
+            <span class="goal-dot"></span>
+            <span>今日 <b id="today-count">0</b>/<em id="today-goal">20</em></span>
+          </div>
+        </div>
+      </header>
+
+      <div class="view-wrap">
+        <!-- 词库 -->
+        <section class="view is-active" id="view-library" data-view-panel="library">
+          <div class="library-hero">
+            <div class="hero-copy">
+              <div class="hero-kicker"><span></span> 考研英语一 · 大纲词库</div>
+              <h2>不要把单词<br>只留在列表里。</h2>
+              <p>108 个精讲词，加上考研大纲词汇，共 5000 余词；按构词、近义与形近关系组织。选中今天的词，还能编成一篇可读的语境文章。</p>
+              <div class="hero-actions">
+                <button class="btn btn-primary" data-action="start-compose"><svg class="icon"><use href="#i-pen"></use></svg>选词成文</button>
+                <button class="btn btn-ghost" data-action="random-word"><svg class="icon"><use href="#i-spark"></use></svg>随机一词</button>
+              </div>
+            </div>
+            <div class="hero-stats">
+              <div class="stat-card">
+                <span class="stat-num" id="hero-total">0</span>
+                <span class="stat-label">全库词条</span>
+                <span class="stat-en">WORDS</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-num" id="hero-affix">0</span>
+                <span class="stat-label">词缀 / 词根</span>
+                <span class="stat-en">MORPHEMES</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-num" id="hero-syn">0</span>
+                <span class="stat-label">近义标签</span>
+                <span class="stat-en">TAGS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="library-mode-switch" role="group" aria-label="词库模式">
+            <button class="is-active" data-library-mode="words">词汇列表 <span id="library-words-count">0</span></button>
+            <button data-library-mode="morph">构词法 <span id="library-morph-count">0</span></button>
+          </div>
+
+          <div id="library-words-pane">
+          <div class="library-toolbar">
+            <div class="search-box" id="library-search-wrap">
+              <svg class="icon"><use href="#i-search"></use></svg>
+              <input id="library-search" type="search" placeholder="搜索单词、释义、词根、近义或笔记…" autocomplete="off" spellcheck="false">
+              <button class="clear-search" id="clear-search" aria-label="清空搜索">×</button>
+            </div>
+            <div class="toolbar-right">
+              <div class="segmented" id="status-filter" role="group" aria-label="学习状态筛选">
+                <button class="is-active" data-status="all">全部</button>
+                <button data-status="favorite">收藏</button>
+                <button data-status="mastered">已掌握</button>
+                <button data-status="new">未掌握</button>
+              </div>
+              <div class="select-wrap">
+                <select id="sort-select" aria-label="排序">
+                  <option value="frequency">按考频</option>
+                  <option value="alpha">按字母</option>
+                  <option value="affix">按词根</option>
+                </select>
+                <svg class="icon"><use href="#i-chevron"></use></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-row" id="filter-row">
+            <div class="filter-group-full">
+              <div class="filter-label">近义</div>
+              <div class="filter-chips" id="semantic-filter-chips"></div>
+            </div>
+          </div>
+
+          <div class="result-meta">
+            <span id="result-count">0 个词条</span>
+            <span class="result-hint" id="result-hint">点击词条显示中文，点箭头看详情</span>
+            <div class="view-toggle" role="group" aria-label="视图切换">
+              <button class="is-active" data-layout="grid" aria-label="卡片视图"><svg class="icon"><use href="#i-grid"></use></svg></button>
+              <button data-layout="list" aria-label="列表视图"><svg class="icon"><use href="#i-list"></use></svg></button>
+            </div>
+          </div>
+
+          <div class="word-grid" id="word-grid"></div>
+
+          <div class="empty-state" id="library-empty" hidden>
+            <div class="empty-mark">词</div>
+            <h3>没有找到匹配的词</h3>
+            <p>换个关键词，或清除筛选条件再试试。</p>
+            <button class="btn btn-ghost" data-action="reset-filters">清除全部筛选</button>
+          </div>
+          </div>
+
+          <div class="library-morph-pane" id="library-morph-pane" hidden>
+            <div class="morph-mode-head">
+              <div>
+                <div class="hero-kicker"><span></span> MORPHOLOGY</div>
+                <h3>一个词根，串起一串词。</h3>
+                <p>前缀定方向，后缀定词性，词根定核心含义。点开任意一组，查看完整解释和词库中的同族词。</p>
+              </div>
+              <div class="morph-total"><b id="morph-total-count">0</b><span>组构词</span></div>
+            </div>
+            <div class="affix-tabs" id="affix-tabs">
+              <button class="is-active" data-affix-type="prefix">前缀 <span id="prefix-tab-count">0</span></button>
+              <button data-affix-type="suffix">后缀 <span id="suffix-tab-count">0</span></button>
+              <button data-affix-type="root">词根 <span id="root-tab-count">0</span></button>
+            </div>
+            <div class="morph-detail" id="morph-detail" hidden></div>
+            <div class="affix-grid" id="affix-grid"></div>
+          </div>
+        </section>
+
+        <!-- 刷词 -->
+        <section class="view" id="view-sprint" data-view-panel="sprint">
+          <div class="sprint-modebar" role="group" aria-label="刷词模式">
+            <button class="sprint-mode is-active" data-sprint-mode="board">
+              <span>词板模式</span><small>一眼扫过，连续点开</small>
+            </button>
+            <button class="sprint-mode" data-sprint-mode="fast">
+              <span>极速模式</span><small>七词一组，快速过词</small>
+            </button>
+          </div>
+
+          <div class="sprint-head">
+            <div>
+              <div class="hero-kicker"><span></span> SPEED REVIEW</div>
+              <h2 id="sprint-title">一眼扫过，<br>连续点开。</h2>
+              <p id="sprint-desc">全部 5500 个词浓缩在一张刷词板上，不翻页。点一下看中文，再点一下收起，适合快速过词。</p>
+            </div>
+            <div class="sprint-meter" id="sprint-meter">
+              <div class="sprint-meter-top"><b id="sprint-revealed">0</b><span>/ <span id="sprint-total">0</span> 已翻开</span></div>
+              <div class="sprint-track"><span id="sprint-progress"></span></div>
+              <div class="sprint-actions">
+                <button class="text-btn" data-action="sprint-expand">全部展开</button>
+                <button class="text-btn muted" data-action="sprint-collapse">全部收起</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="sprint-board-pane">
+            <div class="sprint-grid" id="sprint-grid"></div>
+          </div>
+
+          <section class="sprint-fast" id="sprint-fast-pane" hidden>
+            <div class="fast-toolbar">
+              <button class="btn btn-ghost btn-small" data-action="fast-prev">
+                <svg class="icon"><use href="#i-chevron"></use></svg>上一组
+              </button>
+              <div class="fast-position">
+                第 <b id="fast-group">1</b> 组
+                <span id="fast-range">1–7</span> / <span id="fast-total">5500</span>
+              </div>
+              <button class="text-btn" data-action="fast-summary">结束看小结 <svg class="icon"><use href="#i-arrow"></use></svg></button>
+            </div>
+
+            <div class="fast-list" id="fast-list"></div>
+
+            <div class="fast-foot">
+              <p>先看英文回忆，再点“点击显示”核对中文。键盘 ← / → 切组，空格翻词；位置会自动保存。</p>
+              <button class="btn btn-primary" data-action="fast-next">
+                下一组<svg class="icon"><use href="#i-arrow"></use></svg>
+              </button>
+            </div>
+          </section>
+
+          <section class="sprint-summary" id="sprint-summary" hidden>
+            <div class="summary-check"><svg class="icon"><use href="#i-check"></use></svg></div>
+            <div class="summary-kicker">SPEED SUMMARY · <span id="summary-date"></span></div>
+            <h3>这一轮，先到这里。</h3>
+            <div class="summary-stats">
+              <div><b id="summary-count">0</b><span>本次刷词</span></div>
+              <div><b id="summary-minutes">0</b><span>学习时长 / MIN</span></div>
+              <div><b id="summary-round">1</b><span>学习轮次 / ROUND</span></div>
+            </div>
+            <div class="summary-list" id="summary-list"></div>
+            <div class="summary-actions">
+              <button class="btn btn-primary" data-action="fast-continue">继续刷词</button>
+              <button class="btn btn-ghost" data-action="fast-checkin" id="fast-checkin-btn">打卡</button>
+            </div>
+            <p class="summary-note" id="fast-checkin-note">刷完至少 30 个单词可打卡</p>
+          </section>
+        </section>
+
+        <!-- 每日背诵 -->
+        <section class="view" id="view-daily" data-view-panel="daily">
+          <div class="daily-head">
+            <div>
+              <div class="hero-kicker"><span></span> DAILY RECALL</div>
+              <h2>每天一组词，<br>读成一篇文。</h2>
+              <p>按你的掌握进度抽取今日词单。先看英文回忆，再展开中文核对；背完一个，自动加入选词成文。</p>
+            </div>
+            <div class="daily-stats">
+              <div class="daily-stat"><b id="daily-known-count">0</b><span>今日记住 / KNOWN</span></div>
+              <div class="daily-stat"><b id="daily-total-checkins">0</b><span>累计打卡 / CHECK-INS</span></div>
+            </div>
+          </div>
+
+          <div class="daily-planbar" id="daily-planbar">
+            <div class="daily-plan-modes">
+              <span class="daily-plan-kicker">背诵计划</span>
+              <label class="mode-pill"><input type="radio" name="daily-plan-mode" value="auto" checked><span>记忆曲线</span></label>
+              <label class="mode-pill"><input type="radio" name="daily-plan-mode" value="manual"><span>自主调配</span></label>
+            </div>
+            <div class="daily-plan-fields">
+              <label>新词 <input id="daily-new-count" type="number" min="0" max="30" step="1" value="10"></label>
+              <label>复习 <input id="daily-review-count" type="number" min="0" max="30" step="1" value="10"></label>
+            </div>
+            <button class="btn btn-ghost btn-small" data-action="apply-daily-plan">应用并重新生成</button>
+            <p class="daily-plan-note" id="daily-plan-note">记忆曲线自动安排今日新词与到期复习。</p>
+          </div>
+
+          <div class="daily-checkin-bar">
+            <div class="daily-checkin-title"><span>连续打卡</span><b id="daily-streak">0</b><small>天</small></div>
+            <div class="daily-week" id="daily-week"></div>
+            <button class="btn btn-ghost btn-small" data-action="daily-checkin" id="daily-checkin-btn">完成词单后打卡</button>
+          </div>
+
+          <div class="daily-layout">
+            <div class="daily-stage" id="daily-stage"></div>
+            <aside class="daily-side panel-block">
+              <div class="panel-head">
+                <div><span class="step-num">今日</span><h3>词单</h3></div>
+                <span class="count-pill"><b id="daily-list-count">0</b> / <span id="daily-list-total">20</span></span>
+              </div>
+              <p class="daily-side-note">背完的词会自动加入选词成文，最多 30 个。</p>
+              <div class="daily-word-list" id="daily-word-list"></div>
+              <button class="btn btn-primary daily-compose-btn" data-action="daily-compose">
+                <svg class="icon"><use href="#i-pen"></use></svg>用今日单词写文章
+              </button>
+            </aside>
+          </div>
+        </section>
+
+        <!-- 选词成文 -->
+        <section class="view" id="view-composer" data-view-panel="composer">
+          <div class="composer-head">
+            <div>
+              <div class="hero-kicker"><span></span> CONTEXT COMPOSER</div>
+              <h2>选词成文</h2>
+              <p>从全词库中任选 3–30 个，生成一篇考研英语一风格的语境文章。不按主题限定，你选中的每一个词都会进入文章。</p>
+            </div>
+            <div class="composer-rule">
+              <span>建议</span>
+              <p>搜索全词库添加单词，不限主题。生成后可切换双语、导出或打印。</p>
+            </div>
+          </div>
+
+          <div class="composer-layout">
+            <aside class="composer-panel">
+              <div class="panel-block">
+                <div class="panel-head">
+                  <div><span class="step-num">01</span><h3>选择单词</h3></div>
+                  <span class="count-pill"><b id="selected-count">0</b> / 30</span>
+                </div>
+                <div class="composer-search">
+                  <svg class="icon"><use href="#i-search"></use></svg>
+                  <input id="composer-search" type="search" placeholder="在全词库中搜索并添加…" autocomplete="off">
+                </div>
+                <div class="composer-suggestions" id="composer-suggestions"></div>
+                <div class="selected-chips" id="selected-chips"></div>
+                <div class="panel-actions">
+                  <button class="text-btn" data-action="auto-select"><svg class="icon"><use href="#i-spark"></use></svg>智能补足 10 词</button>
+                  <button class="text-btn muted" data-action="clear-selection"><svg class="icon"><use href="#i-trash"></use></svg>清空</button>
+                </div>
+              </div>
+
+              <div class="panel-block">
+                <div class="panel-head">
+                  <div><span class="step-num">02</span><h3>文章设置</h3></div>
+                </div>
+                <label class="field-label">篇幅</label>
+                <div class="segmented full" id="length-picker">
+                  <button data-length="short">短篇</button>
+                  <button class="is-active" data-length="standard">标准</button>
+                  <button data-length="long">长文</button>
+                </div>
+                <p class="field-note" id="length-note">目标词越多，段落自动增加；所有选词都会进入文章。</p>
+              </div>
+
+              <button class="btn btn-primary btn-generate" id="generate-btn" data-action="generate">
+                <svg class="icon"><use href="#i-spark"></use></svg>
+                <span>生成语境文章</span>
+                <em id="generate-count">0 词</em>
+              </button>
+            </aside>
+
+            <div class="article-stage" id="article-stage">
+              <div class="article-empty" id="article-empty">
+                <div class="empty-orbit">
+                  <span class="orbit-word w1">context</span>
+                  <span class="orbit-word w2">prefix</span>
+                  <span class="orbit-word w3">nuance</span>
+                  <span class="orbit-center">文</span>
+                </div>
+                <h3>让单词在文章里相遇</h3>
+                <p>左侧选好单词后点击生成。系统会依据主题、词性和例句语境，把目标词编排进一篇完整文章。</p>
+                <div class="empty-steps">
+                  <span><i>1</i>选词</span><span class="step-line"></span><span><i>2</i>生成</span><span class="step-line"></span><span><i>3</i>精读</span>
+                </div>
+              </div>
+              <article class="article-paper" id="article-paper" hidden>
+                <div class="paper-topline">
+                  <span>考研英语一 · 语境精读</span>
+                  <span id="paper-meta">—</span>
+                </div>
+                <h2 class="paper-title" id="paper-title">—</h2>
+                <p class="paper-subtitle" id="paper-subtitle">—</p>
+                <div class="paper-toolbar">
+                  <div class="segmented small" id="article-view-tabs">
+                    <button class="is-active" data-article-view="en">原文</button>
+                    <button data-article-view="bi">双语</button>
+                    <button data-article-view="words">词表</button>
+                  </div>
+                  <div class="paper-tools">
+                    <button class="icon-btn" data-action="copy-article" title="复制文章" aria-label="复制文章"><svg class="icon"><use href="#i-copy"></use></svg></button>
+                    <button class="icon-btn" data-action="download-article" title="下载 TXT" aria-label="下载文章"><svg class="icon"><use href="#i-download"></use></svg></button>
+                    <button class="icon-btn" data-action="print-article" title="打印 / 存为 PDF" aria-label="打印文章"><svg class="icon"><use href="#i-print"></use></svg></button>
+                    <button class="icon-btn" data-action="regenerate" title="重新生成" aria-label="重新生成"><svg class="icon"><use href="#i-refresh"></use></svg></button>
+                  </div>
+                </div>
+                <div class="paper-body" id="paper-body"></div>
+                <div class="paper-foot">
+                  <span>YANCI · CONTEXT READING</span>
+                  <span id="paper-coverage">—</span>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- 我的词单 -->
+        <section class="view" id="view-saved" data-view-panel="saved">
+          <div class="saved-head">
+            <div>
+              <div class="hero-kicker"><span></span> MY COLLECTION</div>
+              <h2>我的词单</h2>
+              <p>收藏待复习的词、已经掌握的词、写过的笔记，以及最近生成的文章，都会自动保存在本地。</p>
+            </div>
+            <div class="saved-stats">
+              <div><b id="saved-fav-count">0</b><span>收藏</span></div>
+              <div><b id="saved-mastered-count">0</b><span>已掌握</span></div>
+              <div><b id="saved-note-count">0</b><span>单词笔记</span></div>
+              <div><b id="saved-article-count">0</b><span>生成文章</span></div>
+            </div>
+          </div>
+          <div class="saved-tabs" id="saved-tabs">
+            <button class="is-active" data-saved-tab="favorite">收藏的词 <span id="tab-fav-count">0</span></button>
+            <button data-saved-tab="mastered">已掌握 <span id="tab-mastered-count">0</span></button>
+            <button data-saved-tab="notes">单词笔记 <span id="tab-note-count">0</span></button>
+            <button data-saved-tab="articles">文章记录 <span id="tab-article-count">0</span></button>
+          </div>
+          <div id="saved-content"></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="drawer-scrim" id="drawer-scrim"></div>
+  <aside class="word-drawer" id="word-drawer" aria-hidden="true" aria-label="单词详情">
+    <div class="drawer-inner" id="drawer-inner"></div>
+  </aside>
+
+  <div class="word-pop" id="word-pop" hidden></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/data-syllabus.js"></script>
+  <script src="assets/data-supplement.js"></script>
+  <script src="assets/data-morph.js"></script>
+  <script src="assets/data-morph-extra.js"></script>
+  <script src="assets/data-semantic.js"></script>
+  <script src="assets/data-semantic-extra.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
